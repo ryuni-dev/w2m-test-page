@@ -15,6 +15,7 @@ const H1 = styled(Text)`
   margin: 0;
   font-size: 6rem;
   line-height: 7rem;
+  color: #4169e1;
   @media ${config.media.xsMax} {
     font-size: 5.5rem;
     line-height: 6.5rem;
@@ -28,7 +29,7 @@ export default function MainHeader(){
     const { theme } = useTheme();
     return (
         <Header>
-            <H1 h1 css={{ textGradient: `45deg, ${theme.colors.text.value} -20%, ${theme.colors.primary.value} 70%` }}>
+            <H1 h1>
                 <Link href="/">
                     <span>Team MiMi</span>
                 </Link>

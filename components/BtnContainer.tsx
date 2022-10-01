@@ -14,6 +14,7 @@ const BtnBox = styled.div`
 
 const Btn = styled(Button)`
     margin: 1rem;
+    background-color: #4169e1;
     @media ${config.media.xsMax} {
         margin-left: 0.7rem;
         margin-right: 0.7rem;
