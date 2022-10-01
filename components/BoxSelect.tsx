@@ -34,8 +34,6 @@ const list:number[] = [];
     for (let i = 0; i < 48; ++i) {
         list.push(i);
     }
-
-console.log(props.isColumn);
 const [val, setVal] = useState<string[]>([]);
 useEffect(() => {
     console.log(val)
@@ -87,8 +85,8 @@ return (
         <style jsx>
             {`
             .container {
-                padding: 5px;
-                margin: 5px;
+                padding: 1px;
+                margin: 0.3rem;
                 display: flex;
                 flex-direction: ${props.isColumn ? "column" : "row"};
                 height: 100%;
@@ -101,8 +99,8 @@ return (
                 justify-content: center;
                 align-items: center;
                 border: 1px solid white;
-                width: ${props.isColumn ? "44px" : "12px"};
-                height: ${props.isColumn ? "12px" : "30px"};
+                width: ${props.isColumn ? "1.2rem" : "0.7rem"};
+                height: ${props.isColumn ? "0.5rem" : "1.4rem"};
                 margin: 1px;
                 font-weight: bold;
             }
