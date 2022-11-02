@@ -145,7 +145,9 @@ export default function ScheduleSelector(){
     },[selected]);
 
 
-    const TouchStartEvent = useCallback((e:React.MouseEvent<HTMLDivElement>): void => {
+    const TouchStartEvent = useCallback((
+        e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+        ): void => {
         setClick(true);
         setStart(e.currentTarget.getAttribute("data-key"));
         selected.find(s => parseInt(start) === s) ? setRemoveMode(true) : setRemoveMode(false);
@@ -153,13 +155,17 @@ export default function ScheduleSelector(){
     },
     [click, start, end, removeMode, selected]);
     // | React.TouchEventHandler<HTMLDivElement>
-    const TouchMoveEvent = useCallback((e:React.MouseEvent<HTMLDivElement>): void => {
+    const TouchMoveEvent = useCallback((
+        e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+        ): void => {
         (click) ? setEnd(e.currentTarget.getAttribute("data-key")) : null;
         click ? setCurr(CalcRect({start, end})): null;
     },
     [end, curr, click, start]);
 
-    const TouchEndEvent = useCallback((e:React.MouseEvent<HTMLDivElement>): void => {
+    const TouchEndEvent = useCallback((
+        e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+        ): void => {
         click ? 
         (!removeMode
             ? setSelected([...selected, ...curr]) 
@@ -270,10 +276,15 @@ export default function ScheduleSelector(){
                                 //     setRemoveMode(false);
                                 // }
                             }
-                            // onTouchStart={TouchStartEvent}
-                            // onTouchMove={TouchMoveEvent}
+                            onTouchStart={TouchStartEvent}
+                            onTouchMove={TouchMoveEvent}
+                            onTouchEnd={TouchEndEvent}
                             // onTouchEnd={(e:React.TouchEventHandler<HTMLDivElement>) => {
-                                
+                                // body 스크롤 막음 [바디영역에서 스크롤있으면 터치 이벤트 안먹힙니다]
+    			// BodyScrollDisAble();
+                            // onTouchStart={(e) => {
+                            //     e.currentTarget.getAttribute
+                            // }}
                             // }}
 
                             >
