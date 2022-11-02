@@ -14,7 +14,6 @@ const DivContainer = styled.div`
     width: auto;
     height: auto;
     user-select: none;
-    overflow: hidden;
 `
 const DivCol = styled.div`
     display: flex;
@@ -149,18 +148,20 @@ export default function ScheduleSelector(){
     const TouchStartEvent = useCallback((
         e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
         ): void => {
-        setClick(true);
-        setStart(e.currentTarget.getAttribute("data-key"));
-        selected.find(s => parseInt(start) === s) ? setRemoveMode(true) : setRemoveMode(false);
-        setEnd(e.currentTarget.getAttribute("data-key"));
+            e.preventDefault();
+            setClick(true);
+            setStart(e.currentTarget.getAttribute("data-key"));
+            selected.find(s => parseInt(start) === s) ? setRemoveMode(true) : setRemoveMode(false);
+            setEnd(e.currentTarget.getAttribute("data-key"));
     },
     [click, start, end, removeMode, selected]);
     // | React.TouchEventHandler<HTMLDivElement>
     const TouchMoveEvent = useCallback((
         e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
         ): void => {
-        (click) ? setEnd(e.currentTarget.getAttribute("data-key")) : null;
-        click ? setCurr(CalcRect({start, end})): null;
+            e.preventDefault();
+            (click) ? setEnd(e.currentTarget.getAttribute("data-key")) : null;
+            click ? setCurr(CalcRect({start, end})): null;
     },
     [end, curr, click, start]);
 
@@ -280,6 +281,7 @@ export default function ScheduleSelector(){
                             onTouchStart={TouchStartEvent}
                             onTouchMove={TouchMoveEvent}
                             onTouchEnd={TouchEndEvent}
+                            onTouchCancel={TouchEndEvent}
                             // onTouchEnd={(e:React.TouchEventHandler<HTMLDivElement>) => {
                                 // body 스크롤 막음 [바디영역에서 스크롤있으면 터치 이벤트 안먹힙니다]
     			// BodyScrollDisAble();

@@ -5,10 +5,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: #000000;
-  height: 100%;
-  overflow: hidden; 
+  /* height: 100%; */
+  /* overflow: hidden;  */
 }
-body * { touch-action: none; }
+/* body * { touch-action: none; } */
 
 a {
   color: inherit;
