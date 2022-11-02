@@ -14,6 +14,7 @@ const DivContainer = styled.div`
     width: auto;
     height: auto;
     user-select: none;
+    overflow: hidden;
 `
 const DivCol = styled.div`
     display: flex;
