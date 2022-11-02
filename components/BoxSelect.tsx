@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Selecto from "react-selecto";
 import styled from 'styled-components';
-
 interface Props{
     isColumn: boolean;
 }

@@ -34,6 +34,9 @@ export default function BtnContainer() {
             <Link href='/timeselect/vertical'>
             <Btn>세로 ver.</Btn>
             </Link>
+            <Link href='/timeselect/test3'>
+            <Btn>test ver.</Btn>
+            </Link>
         </BtnBox>
     )
 }

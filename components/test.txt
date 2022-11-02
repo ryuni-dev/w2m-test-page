@@ -1,0 +1,106 @@
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+interface IsSelect {
+    bg: boolean;
+}
+
+const weekArr = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+// const dragEvent = () => {
+//     document.addEventListener("mousemove");
+// }
+
+const DivContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    margin: 0px;
+    user-select: none;
+`
+
+const RowDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+    user-select: none;
+`
+const DataDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    padding: 0px;
+    margin: 0px;
+    width: 1rem;
+    height: 1rem;
+    background-color: ${(props:IsSelect) => (props.bg ? "#4af" : "#000000")}
+`
+const Tr = styled.tr`
+    border: 0.5px solid white;
+    height: 1.5rem;
+`
+const Td = styled.td`
+    width: 2.5rem;
+    border: 0.5px solid white;
+    background-color: ${(props:IsSelect) => (props.bg ? "#4af" : "#000000")}
+`
+const Div = styled.div`
+    background-color: ${(props:IsSelect) => (props.bg ? "#4af" : "#000000")}
+`
+
+export default function TableComponent() {
+    let temp:boolean = false;
+    const list:number[] = [];
+    for (let i = 0; i < 48; ++i) {
+        list.push(i);
+    }
+    const [val, setVal] = useState<string[]>([]);
+    useEffect(() => {
+        console.log(val)
+    },[val]);
+
+    return (
+        <>
+        <Table>
+            <thead>
+                <Tr>
+                <Th></Th>
+                {weekArr.map((week, index) =>
+                    <Th>{week}</Th>)}
+                </Tr>
+            </thead>
+            <tbody>
+                {
+                    list.map(i =>
+                        <Tr>
+                        <Th>{(i * 30) % 60 === 0 ? (i * 30)  / 60 + "시": ""}</Th>
+                        {weekArr.map((week, index) =>     
+                        <Td onMouseMove={()=> temp ? console.log(week + i) : console.log("temp", temp)}
+                        onMouseDown={()=> temp = true}
+                        onMouseUp={()=> temp = false}
+                        bg={temp}
+                        ><Div bg={temp}
+                        ></Div></Td>
+                        )}
+                        </Tr>
+                    )
+                }
+            </tbody>
+        </Table>
+        <style jsx>
+        {`
+        .selected {
+            bgcolor: #4af;
+        }
+        .unselected {
+            bgcolor: #000000;
+        }
+        `}
+        </style>
+        </>
+    );
+}
