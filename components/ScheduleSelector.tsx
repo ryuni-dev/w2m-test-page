@@ -204,7 +204,7 @@ export default function ScheduleSelector(){
             </DivCol>
             {
                 weekArr.map((week, weekIdx) => 
-                    <DivCol>
+                    <DivCol key={weekIdx * 100000}>
                     <DivData key={weekIdx} selected={false} current={false} removeMode={false}>{week}</DivData>
                     {
                         list.map((timeIdx) => 
