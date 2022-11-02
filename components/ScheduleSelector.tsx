@@ -151,13 +151,13 @@ export default function ScheduleSelector(){
         selected.find(s => parseInt(start) === s) ? setRemoveMode(true) : setRemoveMode(false);
         setEnd(e.currentTarget.getAttribute("data-key"));
     },
-    [click, start, end, removeMode]);
+    [click, start, end, removeMode, selected]);
     // | React.TouchEventHandler<HTMLDivElement>
     const TouchMoveEvent = useCallback((e:React.MouseEvent<HTMLDivElement>): void => {
         (click) ? setEnd(e.currentTarget.getAttribute("data-key")) : null;
         click ? setCurr(CalcRect({start, end})): null;
     },
-    [end, curr]);
+    [end, curr, click, start]);
 
     const TouchEndEvent = useCallback((e:React.MouseEvent<HTMLDivElement>): void => {
         click ? 
