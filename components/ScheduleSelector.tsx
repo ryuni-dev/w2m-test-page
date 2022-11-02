@@ -198,14 +198,14 @@ export default function ScheduleSelector(){
                 <DivData selected={false} current={false} removeMode={false}></DivData>
                 {
                     list.map(i =>
-                        <DivData selected={false} current={false} removeMode={false}>{(i * 30) % 60 === 0 ? (i * 30)  / 60 + "시": ""}</DivData>
+                        <DivData key={(i * 30 * 100)} selected={false} current={false} removeMode={false}>{(i * 30) % 60 === 0 ? (i * 30)  / 60 + "시": ""}</DivData>
                         )
                     }
             </DivCol>
             {
                 weekArr.map((week, weekIdx) => 
                     <DivCol>
-                    <DivData selected={false} current={false} removeMode={false}>{week}</DivData>
+                    <DivData key={weekIdx} selected={false} current={false} removeMode={false}>{week}</DivData>
                     {
                         list.map((timeIdx) => 
                             <DivData
