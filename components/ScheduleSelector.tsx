@@ -72,11 +72,15 @@ interface Rect {
 
 
 const CalcRect = (rect:Rect): number[] => {
+    console.log(rect)
+    const rectItems: number[] = [];
+    if(rect.start === null || rect.end === null){
+        return rectItems;
+    }
     const startWeek: number = parseInt(rect.start[0]);
     const startTime: number = parseInt(rect.start.slice(1,3));
     const endWeek: number = parseInt(rect.end[0]);
     const endTime: number = parseInt(rect.end.slice(1,3));
-    const rectItems: number[] = [];
 
 
     if (startWeek <= endWeek) {
@@ -119,10 +123,7 @@ const CalcRect = (rect:Rect): number[] => {
 }
 
 const removeDate = (selectedList: number[], targetList: number[]) => {
-    
-
 }
-
 
 const weekArr = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
@@ -144,27 +145,49 @@ export default function ScheduleSelector(){
         // console.log(selected)
     },[selected]);
 
-
+    const UpdateCurrent = (e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>, start: string, end: string) => {
+        if(click){
+            setEnd(end)
+            setCurr(CalcRect({start, end}));
+        }
+    }
     const TouchStartEvent = useCallback((
         e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
         ): void => {
-            e.preventDefault();
-            setClick(true);
-            setStart(e.currentTarget.getAttribute("data-key"));
+            // e.preventDefault();
+            setClick(true)
+            console.log(click)
+            const targetElement = e.currentTarget.getAttribute("data-key");
+            setStart(targetElement);
             selected.find(s => parseInt(start) === s) ? setRemoveMode(true) : setRemoveMode(false);
-            setEnd(e.currentTarget.getAttribute("data-key"));
+            setEnd(targetElement);
+            // setCurr(CalcRect({start, end}));
+            UpdateCurrent(e, start, targetElement)
     },
     [click, start, end, removeMode, selected]);
-    // | React.TouchEventHandler<HTMLDivElement>
-    const TouchMoveEvent = useCallback((
-        e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-        ): void => {
-            e.preventDefault();
-            (click) ? setEnd(e.currentTarget.getAttribute("data-key")) : null;
-            click ? setCurr(CalcRect({start, end})): null;
+
+    const MouseMoveEvent = useCallback((
+        e:React.MouseEvent<HTMLDivElement>): void => {
+            const targetElement = e.currentTarget.getAttribute("data-key");
+            UpdateCurrent(e, start, targetElement);
+            // (click) ? setEnd(e.currentTarget.getAttribute("data-key")) : null;
+            // click ? setCurr(CalcRect({start, end})): null;
     },
     [end, curr, click, start]);
 
+    const TouchMoveEvent = useCallback((
+        e:React.TouchEvent<HTMLDivElement>): void => {
+            // e.preventDefault();
+            const { touches } = e;
+            if (touches && touches.length != 0) {
+                const { clientX, clientY } = touches[0]
+                const targetElement = document.elementFromPoint(clientX, clientY).getAttribute("data-key");
+                UpdateCurrent(e, start, targetElement);
+                // (click) ? setEnd(targetElement) : null;
+                // click ? setCurr(CalcRect({start, end})): null;
+            }            
+    },
+    [end, curr, click, start]);
     const TouchEndEvent = useCallback((
         e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
         ): void => {
@@ -239,7 +262,7 @@ export default function ScheduleSelector(){
                                 //     // setCurr([...curr, ...CalcRect({start, end})])
                                 // }
                             }
-                                onMouseMove={TouchMoveEvent
+                                onMouseMove={MouseMoveEvent
                                 //     (e:React.MouseEvent<HTMLDivElement>)=>{
                                 //     // console.log(removeMode);
 
@@ -280,8 +303,12 @@ export default function ScheduleSelector(){
                             }
                             onTouchStart={TouchStartEvent}
                             onTouchMove={TouchMoveEvent}
+                            // onTouchMove={(e) => {
+                            //     console.log(e.currentTarget)
+                            // }}
                             onTouchEnd={TouchEndEvent}
                             onTouchCancel={TouchEndEvent}
+                        
                             // onTouchEnd={(e:React.TouchEventHandler<HTMLDivElement>) => {
                                 // body 스크롤 막음 [바디영역에서 스크롤있으면 터치 이벤트 안먹힙니다]
     			// BodyScrollDisAble();
