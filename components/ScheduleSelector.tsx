@@ -155,7 +155,7 @@ export default function ScheduleSelector(){
         e:React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
         ): void => {
             // e.preventDefault();
-            setClick(true)
+            setClick(() => true)
             console.log(click)
             const targetElement = e.currentTarget.getAttribute("data-key");
             setStart(targetElement);
@@ -163,6 +163,7 @@ export default function ScheduleSelector(){
             setEnd(targetElement);
             // setCurr(CalcRect({start, end}));
             UpdateCurrent(e, start, targetElement)
+            // 여기서 뭔가 오류가 있음
     },
     [click, start, end, removeMode, selected]);
 
