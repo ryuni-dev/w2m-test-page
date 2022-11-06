@@ -5,7 +5,7 @@ const TimePicker = styled.select`
     height: 48px;
     background: #FFFFFF;
     /* gray100 */
-
+    color: #333333;
     border: 1px solid #E2E2E2;
     border-radius: 10px;
     font-family: 'Pretendard';
